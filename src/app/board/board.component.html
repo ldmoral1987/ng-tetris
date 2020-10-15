@@ -1,0 +1,12 @@
+<div class="grid">
+    <canvas #board class="game-board"></canvas>
+    <div class="right-column">
+      <div>
+        <h1>ng-tetris by Luis del Moral</h1>
+        <p>Puntuación: {{ points }}</p>
+        <p>Líneas: {{ lines }}</p>
+        <p>Nivel: {{ level }}</p>
+      </div>
+      <button (click)="play()" class="play-button">Play</button>
+    </div>
+  </div>
