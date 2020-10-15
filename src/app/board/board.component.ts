@@ -16,6 +16,7 @@ export class BoardComponent implements OnInit {
   @ViewChild('board', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
  
+  // Contexto 2D de renderizado del Canvas
   ctx: CanvasRenderingContext2D;
 
   // Variables del juego
@@ -58,15 +59,22 @@ export class BoardComponent implements OnInit {
   @HostListener('window:keydown', ['$event'])
   keyEvent(event: KeyboardEvent) {
     if (this.moves[event.key]) {
-      // If the keyCode exists in our moves stop the event from bubbling.
+      // Si la tecla existe en el vector de movimientos, se 
+      // bloquea el evento de tecla pulsada y realizamos
+      // el movimiento de la pieza.
       event.preventDefault();
-      // Get the next state of the piece.
+
+      // Calcula el próximo estado de la pieza, aplicando
+      // el movimiento indicado por la tecla pulsada.
       const p = this.moves[event.key](this.piece);
-      // Move the piece
+
+      // Se mueve la pieza (tan solo cambia sus coordenadas).
       this.piece.move(p);
-      // Clear the old position before drawing
+
+      // Borra la antigua posición de la pieza.
       this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-      // Draw the new position.
+
+      // Pinta la nueva posición de la pieza.
       this.piece.draw();
     }
   }
