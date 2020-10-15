@@ -26,9 +26,16 @@ export class Piece implements IPiece {
     this.color = 'blue';
     this.shape = [[2, 0, 0], [2, 2, 2], [0, 0, 0]];
 
-    // Position where the shape spawns.
+    // Posición en la que aparece la pieza
     this.x = 3;
     this.y = 0;
+  }
+
+  // Esta función mueve la pieza
+  move(p: IPiece) {
+    this.x = p.x;
+    this.y = p.y;
+    this.shape = p.shape;
   }
 
   // Esta función dibuja la pieza en el canvas
@@ -37,8 +44,8 @@ export class Piece implements IPiece {
     this.shape.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value > 0) {
-          // this.x & this.y = position on the board
-          // x & y position are the positions of the shape
+          // this.x & this.y = posición en el tablero
+          // x & y son las posiciones de la pieza
           this.ctx.fillRect(this.x + x, this.y + y, 1, 1);
         }
       });

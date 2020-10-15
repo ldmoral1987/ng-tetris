@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 // Se importan las constantes del juego
-import { COLS, COLORS, SHAPES, BLOCK_SIZE, ROWS } from '../constants';
+import { COLS, COLORS, SHAPES, BLOCK_SIZE, ROWS, KEY } from '../constants';
 import { Piece, IPiece } from '../piece/piece.component';
 
 @Component({
@@ -26,6 +26,14 @@ export class BoardComponent implements OnInit {
   // Tablero de juego
   board: number[][];
   piece: Piece;
+
+  // Movimientos de las piezas
+  // Se permite un movimiento hacia la izquierda, derecha y arriba
+  moves = {
+    "ArrowLeft":  (p: IPiece): IPiece => ({ ...p, x: p.x - 1 }),
+    "ArrowRight": (p: IPiece): IPiece => ({ ...p, x: p.x + 1 }),
+    "ArrowDown": (p: IPiece): IPiece => ({ ...p, y: p.y + 1 })
+  };
  
   ngOnInit() {
     this.initBoard();
@@ -45,12 +53,29 @@ export class BoardComponent implements OnInit {
     // Se aplica un factor de escala al canvas
     this.ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
   }
- 
+
+  // Este listener captura las teclas pulsadas en la ventana
+  @HostListener('window:keydown', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (this.moves[event.key]) {
+      // If the keyCode exists in our moves stop the event from bubbling.
+      event.preventDefault();
+      // Get the next state of the piece.
+      const p = this.moves[event.key](this.piece);
+      // Move the piece
+      this.piece.move(p);
+      // Clear the old position before drawing
+      this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+      // Draw the new position.
+      this.piece.draw();
+    }
+  }
+
   // Función principal del juego
   // Se lanza desde el botón de la vista
   play() {
     this.board = this.getEmptyBoard();
-    console.table(this.board);
+    //console.table(this.board);
 
     // Testing: se crea una nueva pieza y se pinta
     this.piece = new Piece(this.ctx);
@@ -63,7 +88,5 @@ export class BoardComponent implements OnInit {
   getEmptyBoard(): number[][] {
     return Array.from({ length: ROWS }, () => Array(COLS).fill(0));
   }
-
-
 
 }
