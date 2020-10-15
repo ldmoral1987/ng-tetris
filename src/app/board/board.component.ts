@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 // Se importan las constantes del juego
-import { COLS, BLOCK_SIZE, ROWS } from '../constants';
+import { COLS, COLORS, SHAPES, BLOCK_SIZE, ROWS } from '../constants';
+import { Piece, IPiece } from '../piece/piece.component';
 
 @Component({
   selector: 'app-board',
@@ -24,6 +25,7 @@ export class BoardComponent implements OnInit {
 
   // Tablero de juego
   board: number[][];
+  piece: Piece;
  
   ngOnInit() {
     this.initBoard();
@@ -39,6 +41,9 @@ export class BoardComponent implements OnInit {
     // constantes del juego (constants.ts)
     this.ctx.canvas.width = COLS * BLOCK_SIZE;
     this.ctx.canvas.height = ROWS * BLOCK_SIZE;
+
+    // Se aplica un factor de escala al canvas
+    this.ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
   }
  
   // Función principal del juego
@@ -46,6 +51,10 @@ export class BoardComponent implements OnInit {
   play() {
     this.board = this.getEmptyBoard();
     console.table(this.board);
+
+    // Testing: se crea una nueva pieza y se pinta
+    this.piece = new Piece(this.ctx);
+    this.piece.draw();
   }
 
   // Esta función prepara el tablero para el juego
@@ -54,5 +63,7 @@ export class BoardComponent implements OnInit {
   getEmptyBoard(): number[][] {
     return Array.from({ length: ROWS }, () => Array(COLS).fill(0));
   }
+
+
 
 }
