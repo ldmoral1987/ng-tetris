@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular
 // Se importan las constantes del juego
 import { COLS, COLORS, SHAPES, BLOCK_SIZE, ROWS, KEY } from '../constants';
 import { Piece, IPiece } from '../piece/piece.component';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-board',
@@ -28,6 +29,9 @@ export class BoardComponent implements OnInit {
   board: number[][];
   piece: Piece;
 
+  // Se inyecta el servicio GameService
+  constructor(private service: GameService) {}
+
   // Movimientos de las piezas
   // Se permite un movimiento hacia la izquierda, derecha y arriba
   moves = {
@@ -37,6 +41,7 @@ export class BoardComponent implements OnInit {
   };
  
   ngOnInit() {
+    // Se inicializa el tablero
     this.initBoard();
   }
  
@@ -69,7 +74,9 @@ export class BoardComponent implements OnInit {
       const p = this.moves[event.key](this.piece);
 
       // Se mueve la pieza (tan solo cambia sus coordenadas).
-      this.piece.move(p);
+      if (this.service.valid(p, this.board)) {
+        this.piece.move(p);
+      }
 
       // Borra la antigua posición de la pieza.
       this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
