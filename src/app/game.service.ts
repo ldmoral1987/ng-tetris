@@ -47,4 +47,17 @@ export class GameService {
   notOccupied(board: number[][], x: number, y: number): boolean {
     return board[y] && board[y][x] === 0;
   }
+
+  // Rota una pieza alrededor de su centro de rotación, 
+  // la coordenada central de la matriz de cada forma.
+  rotate(piece: IPiece): IPiece {
+    let p: IPiece = JSON.parse(JSON.stringify(piece));
+    for (let y = 0; y < p.shape.length; ++y) {
+      for (let x = 0; x < y; ++x) {
+        [p.shape[x][y], p.shape[y][x]] = [p.shape[y][x], p.shape[x][y]];
+      }
+    }
+    p.shape.forEach(row => row.reverse());
+    return p;
+  }
 }

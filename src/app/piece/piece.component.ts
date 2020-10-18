@@ -21,13 +21,12 @@ export class Piece implements IPiece {
     this.spawn();
   }
 
-  // Función dummy para generar una pieza de prueba
+  // Esta función genera una pieza aleatoria y la configura
   spawn() {
-    this.color = 'blue';
-    this.shape = [[2, 0, 0], [2, 2, 2], [0, 0, 0]];
-
-    // Posición en la que aparece la pieza
-    this.x = 3;
+    const typeId = this.randomizeTetrominoType(COLORS.length - 1);
+    this.shape = SHAPES[typeId];
+    this.color = COLORS[typeId];
+    this.x = typeId === 4 ? 4 : 3;
     this.y = 0;
   }
 
@@ -50,5 +49,10 @@ export class Piece implements IPiece {
         }
       });
     });
+  }
+
+  // Genera una forma aleatoria de entre todas las posibles
+  randomizeTetrominoType(noOfTypes: number): number {
+    return Math.floor(Math.random() * noOfTypes);
   }
 }

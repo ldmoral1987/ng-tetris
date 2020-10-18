@@ -40,6 +40,7 @@ export class BoardComponent implements OnInit {
     "ArrowLeft":  (p: IPiece): IPiece => ({ ...p, x: p.x - 1 }),
     "ArrowRight": (p: IPiece): IPiece => ({ ...p, x: p.x + 1 }),
     "ArrowDown": (p: IPiece): IPiece => ({ ...p, y: p.y + 1 }),
+    "ArrowUp": (p: IPiece): IPiece => this.service.rotate(p),
     " ": (p: IPiece): IPiece => ({ ...p, y: p.y + 1 })
   };
  
