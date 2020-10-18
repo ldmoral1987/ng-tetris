@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 // Se importan las constantes del juego
-import { COLS, COLORS, SHAPES, BLOCK_SIZE, ROWS, KEY } from '../constants';
+import { COLS, COLORS, SHAPES, BLOCK_SIZE, ROWS } from '../constants';
 import { Piece, IPiece } from '../piece/piece.component';
 import { GameService } from '../game.service';
 
@@ -34,10 +34,13 @@ export class BoardComponent implements OnInit {
 
   // Movimientos de las piezas
   // Se permite un movimiento hacia la izquierda, derecha y arriba
+  // El espacio permite que la pieza baje de golpe. La marca que
+  // representa la tecla espacio es " "
   moves = {
     "ArrowLeft":  (p: IPiece): IPiece => ({ ...p, x: p.x - 1 }),
     "ArrowRight": (p: IPiece): IPiece => ({ ...p, x: p.x + 1 }),
-    "ArrowDown": (p: IPiece): IPiece => ({ ...p, y: p.y + 1 })
+    "ArrowDown": (p: IPiece): IPiece => ({ ...p, y: p.y + 1 }),
+    " ": (p: IPiece): IPiece => ({ ...p, y: p.y + 1 })
   };
  
   ngOnInit() {
@@ -71,10 +74,17 @@ export class BoardComponent implements OnInit {
 
       // Calcula el próximo estado de la pieza, aplicando
       // el movimiento indicado por la tecla pulsada.
-      const p = this.moves[event.key](this.piece);
+      let p = this.moves[event.key](this.piece);
 
       // Se mueve la pieza (tan solo cambia sus coordenadas).
-      if (this.service.valid(p, this.board)) {
+      if (event.key === " ") {
+        // Soltar la pieza rápidamente con ESPACIO
+        while (this.service.valid(p, this.board)) {
+          this.piece.move(p);
+          p = this.moves["ArrowDown"](this.piece);
+        }
+      }
+      else if (this.service.valid(p, this.board)) {
         this.piece.move(p);
       }
 
