@@ -50,7 +50,7 @@ export class BoardComponent implements OnInit {
     "ArrowRight": (p: IPiece): IPiece => ({ ...p, x: p.x + 1 }),
     "ArrowDown": (p: IPiece): IPiece => ({ ...p, y: p.y + 1 }),
     "ArrowUp": (p: IPiece): IPiece => this.service.rotate(p),
-    " ": (p: IPiece): IPiece => ({ ...p, y: p.y + 1 })
+    "Control": (p: IPiece): IPiece => ({ ...p, y: p.y + 1 })
   };
 
   // Se inyecta el servicio GameService
@@ -105,7 +105,7 @@ export class BoardComponent implements OnInit {
       event.preventDefault();
       // Get new state
       let p = this.moves[event.key](this.piece);
-      if (event.key === "Escape") {
+      if (event.key === "Control") {
         // Hard drop
         while (this.service.valid(p, this.board)) {
           this.points += POINTS.HARD_DROP;
