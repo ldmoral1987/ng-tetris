@@ -90,7 +90,7 @@ export class BoardComponent implements OnInit {
 
     // Se calcula el tamaño del canvas a partir de las 
     // constantes del juego (constants.ts)    this.ctxNext.canvas.width = 4 * BLOCK_SIZE;
-    this.ctxNext.canvas.height = 4 * BLOCK_SIZE;
+    this.ctxNext.canvas.height = 2 * BLOCK_SIZE;
 
     // Se aplica un factor de escala al canvas
     this.ctxNext.scale(BLOCK_SIZE, BLOCK_SIZE);

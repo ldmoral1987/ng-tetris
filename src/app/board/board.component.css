@@ -1,6 +1,18 @@
+
 .grid {
     display: grid;
-    grid-template-columns: 320px 330px;
+    grid-template-columns: 320px 300px;
+    background-color: rgba(255,255,255,0.7);
+    width: 630px;
+
+}
+
+.controls-table {
+    background-color: rgba(255,255,255,0.7);
+}
+
+.canvas-next-div {
+    text-align: center;
 }
 
 .right-column {
@@ -18,4 +30,17 @@
     font-size: 16px;
     padding: 15px 30px;
     cursor: pointer;
+}
+
+.next {
+    width: 100%;
+}
+
+#tecla {
+    width: 27%;
+}
+
+p
+{
+    font-size: 10pt;
 }

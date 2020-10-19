@@ -2,13 +2,33 @@
     <canvas #board class="game-board"></canvas>
     <div class="right-column">
       <div>
-        <h2>ng-tetris</h2>
-        <h3>by Luis del Moral</h3>
+        <h3>ng-tetris</h3>
+        <h5>by Luis del Moral</h5>
         <p>Puntuación: {{ points }}</p>
         <p>Líneas: {{ lines }}</p>
         <p>Nivel: {{ level }}</p>
         <p>Pieza siguiente:</p>
-        <canvas #next class="next"></canvas>
+        <div class="canvas-next-div">
+          <canvas #next class="next"></canvas>
+        </div>
+        <table class="controls-table">
+          <tr>
+            <td><img id="tecla" src="../../assets/images/escape.png"></td>
+            <td><p>Fin</p></td>
+          </tr>
+          <tr>
+            <td><img id="tecla" src="../../assets/images/left.png"> <img id="tecla" src="../../assets/images/down.png"> <img id="tecla" src="../../assets/images/right.png"> </td>
+            <td><p>Mover</p></td>
+          </tr>
+          <tr>
+            <td><img id="tecla" src="../../assets/images/up.png"></td>
+            <td><p>Rotar</p></td>
+          </tr>
+          <tr>
+            <td><img id="tecla" src="../../assets/images/control.png"></td>
+            <td><p>Soltar</p></td>
+          </tr>
+        </table>
       </div>
       <button (click)="play()" class="play-button">Jugar</button>
     </div>
