@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPiece } from './piece/piece.component';
-import { COLS, ROWS } from './constants';
+import { COLS, ROWS, POINTS } from './constants';
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +59,21 @@ export class GameService {
     }
     p.shape.forEach(row => row.reverse());
     return p;
+  }
+
+  // Calcula los puntos obtenidos al limpiar las líneas
+  getLinesClearedPoints(lines: number, level: number): number {
+    const lineClearPoints =
+      lines === 1
+        ? POINTS.SINGLE
+        : lines === 2
+        ? POINTS.DOUBLE
+        : lines === 3
+        ? POINTS.TRIPLE
+        : lines === 4
+        ? POINTS.TETRIS
+        : 0;
+
+    return (level + 1) * lineClearPoints;
   }
 }

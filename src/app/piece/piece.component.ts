@@ -24,7 +24,6 @@ export class Piece implements IPiece {
   // Esta función genera una pieza aleatoria y la configura
   spawn() {
     const typeId = this.randomizeTetrominoType(COLORS.length - 1);
-    console.log(typeId);
     this.shape = SHAPES[typeId];
     this.color = COLORS[typeId];
     this.x = typeId === 4 ? 4 : 3;
@@ -38,7 +37,7 @@ export class Piece implements IPiece {
     this.shape = p.shape;
   }
 
-  // Esta función dibuja la pieza en el canvas
+  // Dibuja la pieza en el canvas
   draw() {
     this.ctx.fillStyle = this.color;
     this.shape.forEach((row, y) => {
@@ -47,6 +46,19 @@ export class Piece implements IPiece {
           // this.x & this.y = posición en el tablero
           // x & y son las posiciones de la pieza
           this.ctx.fillRect(this.x + x, this.y + y, 1, 1);
+        }
+      });
+    });
+  }
+
+  // Pinta la pieza siguiente
+  drawNext(ctxNext: CanvasRenderingContext2D) {
+    ctxNext.clearRect(0, 0, ctxNext.canvas.width, ctxNext.canvas.height);
+    ctxNext.fillStyle = this.color;
+    this.shape.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value > 0) {
+          ctxNext.fillRect(x, y, 1, 1);
         }
       });
     });
