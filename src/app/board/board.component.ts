@@ -103,10 +103,10 @@ export class BoardComponent implements OnInit {
       this.gameOver();
     } else if (this.moves[event.key]) {
       event.preventDefault();
-      // Get new state
+      // Obtiene un nuevo estado
       let p = this.moves[event.key](this.piece);
       if (event.key === "Control") {
-        // Hard drop
+        // Con control se suelta la pieza de golpe "Hard-drop"
         while (this.service.valid(p, this.board)) {
           this.points += POINTS.HARD_DROP;
           this.piece.move(p);
@@ -135,6 +135,7 @@ export class BoardComponent implements OnInit {
       cancelAnimationFrame(this.requestId);
     }
 
+    // Llama al bucle principal para animar las piezas
     this.animate();
   }
 
