@@ -23,7 +23,7 @@ export class Piece implements IPiece {
 
   // Esta función genera una pieza aleatoria y la configura
   spawn() {
-    const typeId = this.randomizeTetrominoType(COLORS.length - 1);
+    const typeId = this.randomizeTetrominoType(COLORS.length);
     this.shape = SHAPES[typeId];
     this.color = COLORS[typeId];
     this.x = typeId === 4 ? 4 : 3;

@@ -100,12 +100,21 @@ export class BoardComponent implements OnInit {
   // Función principal del juego
   // Se lanza desde el botón de la vista
   play() {
-    this.board = this.getEmptyBoard();
-    //console.table(this.board);
+    // Se resetea el juego
+    this.resetGame();
 
     // Testing: se crea una nueva pieza y se pinta
     this.piece = new Piece(this.ctx);
     this.piece.draw();
+  }
+
+  // Esta función resetea el juego
+  resetGame() {
+    // Se borra el tablero del juego
+    this.board = this.getEmptyBoard();
+
+    // Temporal: se limpia el tablero cuando se resetea el juego
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
   }
 
   // Esta función prepara el tablero para el juego
